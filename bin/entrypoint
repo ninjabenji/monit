@@ -1,0 +1,6 @@
+#!/bin/sh
+
+for config in `/bin/ls -d /var/run/secrets/monit_config_*`;do /bin/ln -s ${config} /etc/monit.d/${config##*/}.cfg ;done
+
+exec /usr/bin/monit -Iv
+

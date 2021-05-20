@@ -1,0 +1,2 @@
+include /etc/monit.d/*.cfg
+

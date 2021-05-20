@@ -1,0 +1,32 @@
+#!/usr/bin/env ash
+
+#ENVIRONMENT VARIABLES 
+# MONIT_ALERT_ACTION	Which alert action to use
+
+#ENVIRONMENT VARIABLES SET BY MONIT
+# MONIT_SERVICE
+# MONIT_EVENT
+# MONIT_DESCRIPTION
+# MONIT_DATE
+# MONIT_HOST
+# MONIT_PROCESS_PID
+# MONIT_PROCESS_MEMORY
+# MONIT_PROCESS_CHILDREN
+# MONIT_PROCESS_CPU_PERCENT
+# MONIT_PROGRAM_STATUS
+
+#LOX24 - SMS Service
+if [ ${MONIT_ALERT_ACTION} == 'lox24-sms' ]
+then 
+  # ENV:    MONIT_SMS_SENDER
+  # SECRETS:
+  MONIT_SMS_GW_CLIENT=`cat /run/secrets/monit_sms_gw_client`
+  MONIT_SMS_GW_TOKEN=`cat /run/secrets/monit_sms_gw_token`
+  MONIT_SMS_NUMBER=`cat /run/secrets/monit_sms_number`
+
+  /usr/bin/curl -S -v -X POST https://api.lox24.eu/sms \
+    -H "Content-Type: application/json" \
+    -H "X-LOX24-AUTH-TOKEN: ${MONIT_SMS_GW_CLIENT}:${MONIT_SMS_GW_TOKEN}" \
+    -d "{\"sender_id\": \"${MONIT_SMS_SENDER}\",\"phone\": \"${MONIT_SMS_NUMBER}\",\"service_code\": \"${MONIT_SMS_PRIORITY}\",\"text\": \"${MONIT_SERVICE}: ${MONIT_EVENT} (${MONIT_DESCRIPTION})\"}"
+fi
+
