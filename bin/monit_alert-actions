@@ -1,7 +1,13 @@
 #!/usr/bin/env ash
 
+#Check each action section for the environment variables and secrets
+# required for that action
+
+#PARAMATERS
+MONIT_ALERT_ACTION=$1
+
 #ENVIRONMENT VARIABLES 
-# MONIT_ALERT_ACTION	Which alert action to use
+#
 
 #ENVIRONMENT VARIABLES SET BY MONIT
 # MONIT_SERVICE
@@ -17,7 +23,7 @@
 
 #LOX24 - SMS Service
 if [ ${MONIT_ALERT_ACTION} == 'lox24-sms' ]
-then 
+then
   # ENV:    MONIT_SMS_SENDER
   # SECRETS:
   MONIT_SMS_GW_CLIENT=`cat /run/secrets/monit_sms_gw_client`
