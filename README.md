@@ -14,6 +14,9 @@ Create any non sensitive config as swarm config(s) (must end in .cfg, at least a
 ## Swarm Secrets
 Create any sensitive config as swarm secrets named "monit_config_*". The entrypoint script will create symlinks in /etc/monit.d/ to all secrets following the naming convention.
 
+## Templating (The best of both!)
+It is possible to create a [config](https://docker.southeastasia.cloudapp.azure.com/engine/swarm/configs/index.html) [template](https://docs.docker.com/engine/swarm/configs/#example-use-a-templated-config) to create a config file where the sensitive values are replaced by placeholders and substituted with secrets/other config values/env vars etc at the time the config is given to a new container. Note that the new container must have access defined for ALL the secrets/configs etc in the template file or the container will ***silently*** fail to create! Its also worth noting that in the "long" form of defining a config the destination can be set, if you change the destination from the default it will alter the config name as seen by the template and the template will need updating accordingly.
+
 ## Alert Actions
 Check the bin/monit_alert-actions script for the environment variables and/or secrets required by each available alert action
 
