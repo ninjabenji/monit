@@ -112,3 +112,11 @@ docker stack deploy --compose-file my_swarm.yaml MYSWARM
 docker service logs MYSWARM_monit
 ```
 
+## Docker Mult-Arch Build
+To create a multi arch build use the following.
+Docker buildx is included in desktop versions and recent CE versions.
+```
+docker buildx create
+docker buildx use <Context from above OR existing context>
+docker buildx build --push --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --tag ninjabenji/monit:<COMMIT-ID> --tag ninjabenji/monit:latest ./
+```
