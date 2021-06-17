@@ -1,4 +1,4 @@
-FROM alpine
+FROM alpine:3.12.7
 RUN apk add monit curl
 
 RUN mkdir /etc/monit.d
